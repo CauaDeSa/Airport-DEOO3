@@ -4,9 +4,9 @@ import data.airport.model.FlightData;
 import data.airport.model.FlightDataCollection;
 import data.airport.states.Arriving;
 import data.airport.states.TakingOff;
-import totems.airport.Display;
+import totems.airport.Displays.OneStateDisplay;
+import totems.airport.Displays.TwoStateDisplay;
 import totems.airport.Totem;
-
 import java.util.Scanner;
 
 public class Airport {
@@ -15,8 +15,17 @@ public class Airport {
 
     public void run() {
 
-        collection.register(new Totem(Arriving.getInstance(), new Display("Arriver Totem")));
-        collection.register(new Totem(TakingOff.getInstance(), new Display("Taking Off Totem")));
+        collection.register(
+                new Totem(
+                        new OneStateDisplay("Arriving totem", Arriving.getInstance())));
+
+        collection.register(
+                new Totem(
+                        new OneStateDisplay("Taking Off totem", TakingOff.getInstance())));
+
+        collection.register(
+                new Totem(
+                        new TwoStateDisplay("Arriving totem", "Taking off totem", Arriving.getInstance(), TakingOff.getInstance())));
 
         int option;
         do{
