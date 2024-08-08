@@ -2,25 +2,20 @@ package totems.airport;
 
 import data.airport.listener.FlightDataObserver;
 import data.airport.model.FlightData;
-import data.airport.states.Arriving;
-import data.airport.states.State;
+import totems.airport.Displays.IDisplay;
 
 public class Totem implements FlightDataObserver {
-    private final State stateObserver;
-    private final Display display;
+    private final IDisplay display;
 
-    public Totem(State stateObserver, Display display) {
-        this.stateObserver = stateObserver;
+    public Totem(IDisplay display) {
         this.display = display;
     }
 
     @Override
     public void update(FlightData flight) {
         if (flight != null) {
-            if (flight.getState() == stateObserver)
-                display.insert(flight);
-            else
-                display.remove(flight.getFlightNumber());
+            display.removeIfContains(flight);
+            display.insert(flight);
         }
     }
 }
